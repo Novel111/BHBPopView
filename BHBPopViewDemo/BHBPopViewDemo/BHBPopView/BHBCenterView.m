@@ -76,14 +76,33 @@
     for (int i = 0; i < items.count; i ++) {
         item = items[i];
         BHBCustomBtn * btn = [BHBCustomBtn buttonWithType:UIButtonTypeCustom];
-        [btn bhb_setImage:[NSString stringWithFormat:@"%@",item.icon]];
+        //[btn bhb_setImage:[NSString stringWithFormat:@"%@",item.icon]];
+        [btn setImage:[UIImage imageNamed:item.icon] forState:UIControlStateNormal];
         [btn.imageView setContentMode:UIViewContentModeCenter];
         [btn setTitle:item.title forState:UIControlStateNormal];
         btn.titleLabel.textAlignment = NSTextAlignmentCenter;
         [btn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
         btn.titleLabel.font = [UIFont systemFontOfSize:14];
-        CGFloat x = (i % 3) * self.frame.size.width / 3.0;
-        CGFloat y = (i / 3) * self.frame.size.height / 2.0;
+        CGFloat x = 0;
+        CGFloat y = 0;
+        CGFloat width = self.frame.size.width / 3.0;
+        CGFloat height = self.frame.size.height / 2;
+        if(i == 0)
+        {
+            x =  self.frame.size.width / 3 - 100;
+            y =  self.frame.size.height / 1.5 + 20;
+        }
+        else if(i == 1)
+        {
+            x =  self.frame.size.width / 3 + 100;
+            y =  self.frame.size.height / 1.5 + 20;
+        }
+        else if(i == 2)
+        {
+            x = self.frame.size.width / 2 - width / 2 ;
+            y = self.frame.size.height / 1.5 + 138;
+        }
+            
         if (isMore) {
             x += [UIScreen mainScreen].bounds.size.width;
             [self.moreBtns addObject:btn];
@@ -91,8 +110,7 @@
         else {
             [self.homeBtns addObject:btn];
         }
-        CGFloat width = self.frame.size.width / 3.0;
-        CGFloat height = self.frame.size.height / 2;
+        
         [btn addTarget:self action:@selector(didClickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [btn addTarget:self action:@selector(didTouchBtn:) forControlEvents:UIControlEventTouchDown];
         [btn addTarget:self action:@selector(didCancelBtn:) forControlEvents:UIControlEventTouchDragInside];
